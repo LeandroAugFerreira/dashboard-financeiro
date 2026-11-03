@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: Todas as linhas são sintéticas, inteiras em centavos e rastreáveis
+ok 1 - Todas as linhas são sintéticas, inteiras em centavos e rastreáveis
+  ---
+  duration_ms: 0.9572
+  ...
+# Subtest: Fechamento anual de 2026 em centavos
+ok 2 - Fechamento anual de 2026 em centavos
+  ---
+  duration_ms: 0.6268
+  ...
+# Subtest: Identidades financeiras por ano, mês e centro
+ok 3 - Identidades financeiras por ano, mês e centro
+  ---
+  duration_ms: 6.4662
+  ...
+# Subtest: Soma dos centros reconcilia com o consolidado
+ok 4 - Soma dos centros reconcilia com o consolidado
+  ---
+  duration_ms: 1.0585
+  ...
+# Subtest: Equilíbrio cobre custos variáveis e despesas fixas
+ok 5 - Equilíbrio cobre custos variáveis e despesas fixas
+  ---
+  duration_ms: 0.2647
+  ...
+# Subtest: Filtro vazio não inventa percentuais nem equilíbrio
+ok 6 - Filtro vazio não inventa percentuais nem equilíbrio
+  ---
+  duration_ms: 0.2339
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 139.8696

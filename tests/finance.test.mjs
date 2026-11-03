@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {calculate} from '../web/finance-model.mjs';
+const data=JSON.parse(readFileSync(new URL('../web/data.json',import.meta.url),'utf8'));
+test('Todas as linhas são sintéticas, inteiras em centavos e rastreáveis',()=>{assert.equal(data.synthetic,true);assert.equal(data.movimentos.length,360);assert.equal(data.orcamento.length,72);for(const r of data.movimentos){assert.equal(r.origem,'SINTETICO');assert.ok(Number.isSafeInteger(r.valor_centavos));}});
+test('Fechamento anual de 2026 em centavos',()=>{const m=calculate(data,{year:'2026'});assert.equal(m.gross,25650000);assert.equal(m.deductions,2565000);assert.equal(m.costs,10255500);assert.equal(m.expenses,4273120);assert.equal(m.taxes,2563870);assert.equal(m.net,23085000);assert.equal(m.profit,5992510);});
+test('Identidades financeiras por ano, mês e centro',()=>{for(const year of ['2025','2026'])for(const month of ['',...Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0'))])for(const center of ['','Comercial','Serviços','Operações']){const m=calculate(data,{year,month,center});assert.equal(Math.round(m.net*100),Math.round((m.gross-m.deductions)*100));assert.equal(Math.round(m.profit*100),Math.round((m.net-m.totalExpenses)*100));assert.equal(m.adherence,m.profit/m.planProfit);assert.equal(m.margin,m.profit/m.net);}});
+test('Soma dos centros reconcilia com o consolidado',()=>{for(const year of ['2025','2026']){const consolidated=calculate(data,{year}),centers=['Comercial','Serviços','Operações'].map(center=>calculate(data,{year,center}));for(const key of ['gross','net','profit','totalExpenses'])assert.ok(Math.abs(centers.reduce((s,m)=>s+m[key],0)-consolidated[key])<1e-6);}});
+test('Equilíbrio cobre custos variáveis e despesas fixas',()=>{const m=calculate(data,{year:'2026'}),variable=(m.deductions+m.costs+m.taxes)/m.gross;assert.ok(Math.abs(m.breakEven*(1-variable)-m.expenses)<1e-6);});
+test('Filtro vazio não inventa percentuais nem equilíbrio',()=>{const m=calculate(data,{year:'1999'});assert.equal(m.rows,0);assert.equal(m.margin,null);assert.equal(m.adherence,null);assert.equal(m.breakEven,null);assert.equal(m.risk,'Sem dados');});
