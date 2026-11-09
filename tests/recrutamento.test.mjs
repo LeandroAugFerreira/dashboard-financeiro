@@ -166,6 +166,11 @@ test('somente realizado sem orçamento não pode ser tratado como sucesso financ
  assert.equal(m.adherence,null);
  // Sem referência orçada, a avaliação comparativa precisa ser indisponível.
  assert.equal(m.risk,'Sem orçamento');
+ const losses={movimentos:[
+  {data:'2026-01-01',centro:'Exemplo',categoria:'Receita Bruta',valor_centavos:100},
+  {data:'2026-01-01',centro:'Exemplo',categoria:'Despesas',valor_centavos:200}
+ ],orcamento:[]};
+ assert.equal(calculate(losses,{year:'2026'}).risk,'Alto'); // margem negativa tem prioridade
 });
 
 test('centros, datas e categorias preservam a mesma estrutura entre os anos',()=>{
