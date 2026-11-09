@@ -164,9 +164,8 @@ test('somente realizado sem orçamento não pode ser tratado como sucesso financ
  const m=calculate(demo,{year:'2026'});
  assert.equal(m.planProfit,0);
  assert.equal(m.adherence,null);
- // O modelo histórico ainda classifica este caso como Controlado;
- // registrar como lacuna e não alterar regras originais sem validação.
- assert.equal(m.risk,'Controlado');
+ // Sem referência orçada, a avaliação comparativa precisa ser indisponível.
+ assert.equal(m.risk,'Sem orçamento');
 });
 
 test('centros, datas e categorias preservam a mesma estrutura entre os anos',()=>{
