@@ -81,3 +81,15 @@ A publicação foi autorizada pelo autor. Não foi atribuída uma nova licença 
 ## 15. Portfólio
 
 [Página do projeto](https://leandroaugferreira.github.io/financeiro.html) · [Perfil GitHub](https://github.com/LeandroAugFerreira)
+
+## 16. Estudo de caso técnico para recrutamento — Dados/BI
+
+- [Auditoria](docs/recrutamento/AUDITORIA.md), [estudo de caso](docs/recrutamento/ESTUDO_DE_CASO.md), [arquitetura Mermaid](docs/recrutamento/ARQUITETURA.md), [15 perguntas de entrevista](docs/recrutamento/ENTREVISTA_TECNICA.md) e [roteiro de três minutos](docs/recrutamento/ROTEIRO_DEMO.md).
+- [Guia financeiro do case](https://leandroaugferreira.github.io/financeiro-case.html): seleção 2025/2026, comparação de margem e aderência e identificação dos meses com desvio; complementar ao [dashboard web original](https://leandroaugferreira.github.io/dashboards/financeiro/).
+- [19 novos testes de cálculo](tests/recrutamento.test.mjs): filtros e partições, realizado versus orçamento, reconciliação dos totais, risco por mês e ausência de orçamento. [25 testes Node aprovados](https://github.com/LeandroAugFerreira/dashboard-financeiro/actions/runs/42543050313).
+- [Reprodução isolada em Python](scripts/verify_generator.py): gera JSON/CSV em pasta temporária e confere hashes, inclusive versões dos CSV oferecidas para download.
+- [Evidências e limites](docs/recrutamento/EVIDENCIAS.md) · [Qualidade](docs/recrutamento/QUALIDADE_DADOS.md) · [Plano priorizado](docs/recrutamento/PLANO_DE_MELHORIAS.md).
+
+**Correção controlada:** sem orçamento e com margem não negativa, o semáforo exibe `Sem orçamento`, em vez de classificar o resultado artificialmente como Alto. Margem negativa continua sendo `Alto`. Não houve modificação de bases, gerador ou demais fórmulas com orçamento.
+
+**Escopo rigoroso:** o modelo web é **sintético e independente** da captura Power BI; o PBIX financeiro correspondente não foi localizado. Não há registros bancários, datas de pagamentos/recebimentos nem fluxo de caixa real, por isso o case trata de **resultado gerencial hipotético** e orçamento — não demonstra ERP, DAX original ou resultados empresariais.
